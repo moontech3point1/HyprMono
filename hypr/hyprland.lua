@@ -206,6 +206,8 @@ hl.bind(mainMod .. " + " .. "V", hl.dsp.window.float())
 
 hl.bind(mainMod .. " + " .. "D", hl.dsp.exec_cmd(menu))
 
+hl.bind(mainMod .. " + " .. "M", hl.dsp.exec_cmd("bash ~/.config/hypr/scripts/menu.sh"))
+
 hl.bind(mainMod .. " + " .. "P", hl.dsp.window.pseudo())
 
 hl.bind(mainMod .. " + " .. "J", hl.dsp.layout("togglesplit"))

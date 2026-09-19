@@ -17,7 +17,7 @@ Why is it called HyprMono? Because, Hyprland + Monochrome = HyprMono
 - `kitty/` - terminal, themed to match, with some transparency so the blur shows through
 - `fastfetch/` - system info screen that runs when you open a terminal
 - `cava/` - config for the audio visualizer widget
-- `scripts/` - the visualizer launcher and the install-time key remap tool
+- `scripts/` - the visualizer launcher, the main menu, and the install-time key remap tool
 
 ## Requirements
 
@@ -66,6 +66,7 @@ Return by default).
 | --- | --- |
 | Mod + Return | terminal |
 | Mod + D | app launcher |
+| Mod + M | main menu (apps, screenshot, lock, power) |
 | Mod + Q | close window |
 | Mod + E | file manager |
 | Mod + V | toggle floating |
