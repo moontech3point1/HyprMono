@@ -67,8 +67,8 @@ hl.config({
         allow_tearing = false,
         layout = "dwindle",
         col = {
-            active_border = { colors = { "rgba(e0e0e0ee)", "rgba(888888ee)" }, angle = 45 },
-            inactive_border = "rgba(3a3a3aaa)",
+            active_border = { colors = { "rgba(f0f0f0ee)", "rgba(707070ee)" }, angle = 45 },
+            inactive_border = "rgba(2c2c2c99)",
         },
     },
 })
@@ -86,9 +86,9 @@ hl.config({
         },
         shadow = {
             enabled = true,
-            range = 20,
-            render_power = 3,
-            color = "rgba(1a1a1aaa)",
+            range = 18,
+            render_power = 4,
+            color = "rgba(0d0d0dcc)",
         },
         active_opacity = 0.95,
         inactive_opacity = 0.85,
