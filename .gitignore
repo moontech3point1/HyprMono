@@ -1,0 +1,4 @@
+# local wallpaper, not part of the dotfiles themselves
+*.png
+*.jpg
+*.jpeg

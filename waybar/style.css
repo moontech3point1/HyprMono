@@ -1,0 +1,72 @@
+@define-color bg #1a1a1a;
+@define-color bg-alt #242424;
+@define-color fg #e0e0e0;
+@define-color accent #c8c8c8;
+@define-color muted #6c6c6c;
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+#workspaces, #clock, #pulseaudio, #network, #battery, #tray, #custom-mediaplayer, #idle_inhibitor, #cpu, #memory, #custom-weather {
+    background-color: rgba(26, 26, 26, 0.75);
+    border-radius: 14px;
+    margin: 0 4px;
+    padding: 0 10px;
+    color: @fg;
+}
+
+#custom-mediaplayer {
+    color: @muted;
+}
+
+#custom-mediaplayer.Playing {
+    color: @fg;
+}
+
+#idle_inhibitor.activated {
+    color: #ffffff;
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: #6c6c6c;
+    background: transparent;
+}
+
+#workspaces button.active {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+}
+
+#clock {
+    font-weight: 600;
+    color: @fg;
+}
+
+#pulseaudio, #network, #battery {
+    color: @fg;
+}
+
+/* keeping these grayscale too, using weight/underline instead of color to flag status */
+#battery.warning {
+    color: #e0e0e0;
+    font-weight: 600;
+}
+
+#battery.critical {
+    color: #ffffff;
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+#tray {
+    padding: 0 8px;
+}
