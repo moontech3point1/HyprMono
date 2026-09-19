@@ -103,9 +103,18 @@ pkgs=(
     fastfetch
     cava
     playerctl
+    gnome-keyring
+    libsecret
 )
 
 sudo pacman -S --needed "${pkgs[@]}"
+
+# without this, chromium based browsers (brave, chrome, etc) can't find a secret
+# service to encrypt saved logins/cookies with under Hyprland, and if you also
+# have GNOME installed (which pulls this in on its own) the two sessions end up
+# encrypting with different keys - browser looks logged out of everything the
+# moment you switch into Hyprland
+sudo systemctl --user enable --now gnome-keyring-daemon.socket 2>/dev/null || true
 
 # networkmanager doesn't start itself, need to enable the service or wifi won't work
 sudo systemctl enable --now NetworkManager
@@ -133,9 +142,10 @@ cp -r "$script_dir/mako/"* ~/.config/mako/
 cp -r "$script_dir/kitty/"* ~/.config/kitty/
 cp -r "$script_dir/fastfetch/"* ~/.config/fastfetch/
 cp -r "$script_dir/cava/"* ~/.config/cava/
-# Only the widget launcher is needed at runtime; remap-key.py is used during installation only.
+# Only the widget launcher and main menu are needed at runtime; remap-key.py is used during installation only.
 mkdir -p ~/.config/hypr/scripts
 cp "$script_dir/scripts/cava-widget.sh" ~/.config/hypr/scripts/
+cp "$script_dir/scripts/menu.sh" ~/.config/hypr/scripts/
 
 chmod +x ~/.config/hypr/scripts/*.sh
 chmod +x ~/.config/waybar/scripts/*.sh
