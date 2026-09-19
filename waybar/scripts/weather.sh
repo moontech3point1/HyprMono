@@ -4,7 +4,7 @@
 weather=$(curl -s --max-time 5 "wttr.in/?format=%C+%t")
 
 if [ -z "$weather" ]; then
-    echo " N/A"
+    echo " N/A"
 else
-    echo " $weather"
+    echo " $weather"
 fi

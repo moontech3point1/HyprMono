@@ -15,14 +15,15 @@
         "format": "{icon}",
         "on-click": "activate",
         "format-icons": {
-            "active": "",
-            "default": ""
+            "active": "",
+            "default": ""
         }
     },
 
     "custom/mediaplayer": {
         "exec": "~/.config/waybar/scripts/mediaplayer.sh",
         "return-type": "json",
+        "escape": true,
         "interval": 2,
         "on-click": "playerctl play-pause",
         "on-click-right": "playerctl next"
@@ -36,18 +37,18 @@
     "idle_inhibitor": {
         "format": "{icon}",
         "format-icons": {
-            "activated": "",
-            "deactivated": ""
+            "activated": "",
+            "deactivated": ""
         }
     },
 
     "cpu": {
-        "format": " {usage}%",
+        "format": " {usage}%",
         "interval": 5
     },
 
     "memory": {
-        "format": " {}%",
+        "format": "󰍛 {}%",
         "interval": 5
     },
 
@@ -59,16 +60,16 @@
 
     "pulseaudio": {
         "format": "{icon} {volume}%",
-        "format-muted": " muted",
+        "format-muted": " muted",
         "format-icons": {
-            "default": ["", "", ""]
+            "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
     },
 
     "network": {
-        "format-wifi": " {signalStrength}%",
-        "format-ethernet": " connected",
+        "format-wifi": " {signalStrength}%",
+        "format-ethernet": "󰈀 connected",
         "format-disconnected": "⚠ offline",
         "tooltip-format": "{ifname} via {gwaddr}"
     },
@@ -79,7 +80,7 @@
             "critical": 15
         },
         "format": "{icon} {capacity}%",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": ["", "", "", "", ""]
     },
 
     "tray": {

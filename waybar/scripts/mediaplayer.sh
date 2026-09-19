@@ -13,9 +13,9 @@ artist=$(playerctl metadata artist 2>/dev/null)
 title=$(playerctl metadata title 2>/dev/null)
 
 if [ "$status" = "Playing" ]; then
-    icon=""
+    icon=""
 else
-    icon=""
+    icon=""
 fi
 
 # trim it down so it doesn't take over the whole bar
@@ -23,5 +23,9 @@ text="$icon $artist - $title"
 if [ ${#text} -gt 40 ]; then
     text="${text:0:37}..."
 fi
+
+# Escape backslashes and double quotes so titles containing them still produce valid JSON.
+text="${text//\\/\\\\}"
+text="${text//\"/\\\"}"
 
 echo "{\"text\": \"$text\", \"class\": \"$status\"}"
