@@ -17,9 +17,9 @@ hl.monitor({
 
 -- programs that get launched on login moved down to the autostart block at the bottom of this file
 
-hl.env("XCURSOR_SIZE", 24)
+hl.env("XCURSOR_SIZE", "24")
 
-hl.env("HYPRCURSOR_SIZE", 24)
+hl.env("HYPRCURSOR_SIZE", "24")
 
 local mainMod = "SUPER"
 
@@ -102,7 +102,6 @@ hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "oversho
 
 hl.config({
     dwindle = {
-        pseudotile = true,
         preserve_split = true,
     },
 })
@@ -113,10 +112,10 @@ hl.config({
     },
 })
 
-hl.config({
-    gestures = {
-        workspace_swipe = true,
-    },
+hl.gesture({
+    fingers = 3,
+    direction = "horizontal",
+    action = "workspace",
 })
 
 hl.config({
@@ -143,7 +142,7 @@ hl.window_rule({
     match = {
         class = "^(nautilus)$",
     },
-    size = "800x500",
+    size = "800 500",
 })
 
 hl.window_rule({
