@@ -30,10 +30,12 @@ echo ""
 # python-evdev does the actual raw key listening, it's in the official repos so no AUR needed here
 sudo pacman -S --needed --noconfirm python-evdev > /dev/null
 
-remap_result="$(mktemp)"
+# Create the result file as root. With fs.protected_regular enabled (the default on Arch), root cannot
+# open a file owned by another user inside a sticky directory such as /tmp for writing.
+remap_result="$(sudo mktemp)"
 sudo python3 "$script_dir/scripts/remap-key.py" "$remap_result"
-mainmod="$(cat "$remap_result")"
-rm -f "$remap_result"
+mainmod="$(sudo cat "$remap_result")"
+sudo rm -f "$remap_result"
 
 if [[ "$mainmod" == UNSUPPORTED:* ]]; then
     picked="${mainmod#UNSUPPORTED:}"
@@ -61,6 +63,7 @@ if ! command -v yay &> /dev/null; then
     echo "yay not found, building it now"
     sudo pacman -S --needed --noconfirm git base-devel
     cd /tmp
+    rm -rf /tmp/yay
     git clone https://aur.archlinux.org/yay.git
     cd yay
     makepkg -si --noconfirm
@@ -89,6 +92,7 @@ pkgs=(
     wl-clipboard
     brightnessctl
     pipewire
+    pipewire-pulse
     wireplumber
     pavucontrol
     xdg-desktop-portal-hyprland
@@ -129,7 +133,9 @@ cp -r "$script_dir/mako/"* ~/.config/mako/
 cp -r "$script_dir/kitty/"* ~/.config/kitty/
 cp -r "$script_dir/fastfetch/"* ~/.config/fastfetch/
 cp -r "$script_dir/cava/"* ~/.config/cava/
-cp -r "$script_dir/scripts" ~/.config/hypr/scripts
+# Only the widget launcher is needed at runtime; remap-key.py is used during installation only.
+mkdir -p ~/.config/hypr/scripts
+cp "$script_dir/scripts/cava-widget.sh" ~/.config/hypr/scripts/
 
 chmod +x ~/.config/hypr/scripts/*.sh
 chmod +x ~/.config/waybar/scripts/*.sh

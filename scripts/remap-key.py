@@ -91,9 +91,19 @@ def find_keyboards():
     return devices
 
 
+def drain_pending(devices):
+    # The y/N confirmation is answered on the same keyboard that is being monitored, so those keypresses
+    # remain buffered in the devices. Discard them before listening again, otherwise they are read as a
+    # new (invalid) combo and trigger a spurious error message.
+    for dev in devices:
+        while select.select([dev], [], [], 0)[0]:
+            list(dev.read())
+
+
 def wait_for_combo(devices):
     """Blocks until the user presses+releases a valid modifier combo (or something
     invalid, in which case it just complains and keeps listening)."""
+    drain_pending(devices)
     held = set()
     peak = set()
     saw_disallowed_key = False
