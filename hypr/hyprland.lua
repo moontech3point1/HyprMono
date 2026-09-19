@@ -21,6 +21,13 @@ hl.env("XCURSOR_SIZE", "24")
 
 hl.env("HYPRCURSOR_SIZE", "24")
 
+-- macOS style cursor, installed from the apple_cursor AUR package in install.sh
+-- HYPRCURSOR_THEME doesn't actually ship a native hyprcursor version of this theme,
+-- Hyprland just falls back to the regular Xcursor one when that happens, so this is fine
+hl.env("XCURSOR_THEME", "macOS")
+
+hl.env("HYPRCURSOR_THEME", "macOS")
+
 local mainMod = "SUPER"
 
 local terminal = "kitty"
