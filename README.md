@@ -1,0 +1,2 @@
+# HyprMono
+A Hyprland Config
