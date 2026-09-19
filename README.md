@@ -3,6 +3,8 @@
 A minimal, full-grayscale Hyprland setup. No accent colors, heavy blur, rounded corners,
 and a macOS style cursor. Built for Arch Linux (or anything Arch based with pacman/yay).
 
+Why is it called HyprMono? Because, Hyprland + Monochrome = HyprMono
+
 ## What's included
 
 - `hypr/hyprland.lua` - main config: keybinds, window rules, animations
@@ -25,7 +27,7 @@ and a macOS style cursor. Built for Arch Linux (or anything Arch based with pacm
 ## Install
 
 ```
-git clone https://github.com/<your-username>/HyprMono.git
+git clone https://github.com/moontech3point1/HyprMono.git
 cd HyprMono
 ./install.sh
 ```
