@@ -72,6 +72,7 @@ Return by default).
 | Mod + V | toggle floating |
 | Mod + 1-0 | switch workspace |
 | Mod + Shift + 1-0 | move window to workspace |
+| Mod + M | settings menu |
 | Print | screenshot a region to clipboard |
 
 The Shift in the move window and exit binds is swapped for Ctrl if your main modifier
