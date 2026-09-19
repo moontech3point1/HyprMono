@@ -30,6 +30,17 @@ hl.env("HYPRCURSOR_THEME", "macOS")
 
 local mainMod = "SUPER"
 
+-- Secondary modifier for the "move window to workspace" and exit binds. Shift is used by default.
+-- If the main modifier already contains Shift, those binds would collide with the primary ones
+-- (the last definition wins), so Ctrl is used instead, or Alt if Ctrl is already part of the main modifier.
+local secondMod = "SHIFT"
+if string.find(mainMod, "SHIFT") then
+    secondMod = "CTRL"
+    if string.find(mainMod, "CTRL") then
+        secondMod = "ALT"
+    end
+end
+
 local terminal = "kitty"
 
 local fileManager = "nautilus"
@@ -139,7 +150,7 @@ hl.config({
 hl.window_rule({
     name  = "float_99",
     match = {
-        class = "^(nautilus)$",
+        class = "^(org\\.gnome\\.Nautilus)$",
     },
     float = true,
 })
@@ -147,7 +158,7 @@ hl.window_rule({
 hl.window_rule({
     name  = "size_800_500_100",
     match = {
-        class = "^(nautilus)$",
+        class = "^(org\\.gnome\\.Nautilus)$",
     },
     size = "800 500",
 })
@@ -177,8 +188,8 @@ hl.window_rule({
     float = true,
     no_initial_focus = true,
     pin = true,
-    size = "260x90",
-    move = "100%-280 100%-110",
+    size = "260 90",
+    move = "monitor_w-280 monitor_h-110",
 })
 
 -- keybinds
@@ -187,7 +198,7 @@ hl.bind(mainMod .. " + " .. "Return", hl.dsp.exec_cmd(terminal))
 
 hl.bind(mainMod .. " + " .. "Q", hl.dsp.window.close())
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. "Q", hl.dsp.exit())
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. "Q", hl.dsp.exit())
 
 hl.bind(mainMod .. " + " .. "E", hl.dsp.exec_cmd(fileManager))
 
@@ -235,25 +246,25 @@ hl.bind(mainMod .. " + " .. 0, hl.dsp.focus({ workspace = 10 }))
 
 -- move active window to a workspace with mainMod + SHIFT + [0-9]
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 1, hl.dsp.window.move({ workspace = 1 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 1, hl.dsp.window.move({ workspace = 1 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 2, hl.dsp.window.move({ workspace = 2 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 2, hl.dsp.window.move({ workspace = 2 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 3, hl.dsp.window.move({ workspace = 3 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 3, hl.dsp.window.move({ workspace = 3 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 4, hl.dsp.window.move({ workspace = 4 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 4, hl.dsp.window.move({ workspace = 4 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 5, hl.dsp.window.move({ workspace = 5 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 5, hl.dsp.window.move({ workspace = 5 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 6, hl.dsp.window.move({ workspace = 6 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 6, hl.dsp.window.move({ workspace = 6 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 7, hl.dsp.window.move({ workspace = 7 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 7, hl.dsp.window.move({ workspace = 7 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 8, hl.dsp.window.move({ workspace = 8 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 8, hl.dsp.window.move({ workspace = 8 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 9, hl.dsp.window.move({ workspace = 9 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 9, hl.dsp.window.move({ workspace = 9 }))
 
-hl.bind(mainMod .. " + " .. "SHIFT" .. " + " .. 0, hl.dsp.window.move({ workspace = 10 }))
+hl.bind(mainMod .. " + " .. secondMod .. " + " .. 0, hl.dsp.window.move({ workspace = 10 }))
 
 -- screenshot stuff, region select then copies to clipboard
 
@@ -261,17 +272,18 @@ hl.bind("Print", hl.dsp.exec_cmd("grim -g \"$(slurp)\" - | wl-copy"))
 
 hl.bind(mainMod .. " + " .. "Print", hl.dsp.exec_cmd("grim - | wl-copy"))
 
--- volume and brightness, needs playerctl/brightnessctl installed
+-- Volume and brightness. Requires wireplumber (wpctl) and brightnessctl.
+-- "repeating" allows holding the key, "locked" keeps the binds active on the lock screen.
 
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"))
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
 
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"))
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
 
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"))
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true })
 
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"))
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl set 5%+"), { locked = true, repeating = true })
 
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"))
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl set 5%-"), { locked = true, repeating = true })
 
 hl.bind(mainMod .. " + " .. "mouse:272", hl.dsp.window.drag(), { mouse = true })
 
@@ -283,6 +295,6 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("mako")
     hl.exec_cmd("hyprpaper")
     hl.exec_cmd("hypridle")
-    hl.exec_cmd("hyprpolkitagent")
+    hl.exec_cmd("systemctl --user start hyprpolkitagent")
     hl.exec_cmd("bash ~/.config/hypr/scripts/cava-widget.sh")
 end)

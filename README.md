@@ -71,6 +71,11 @@ Return by default).
 | Mod + Shift + 1-0 | move window to workspace |
 | Print | screenshot a region to clipboard |
 
+The Shift in the move window and exit binds is swapped for Ctrl if your main modifier
+already has Shift in it (Shift, Ctrl + Shift, Alt + Shift), or Alt if it has Ctrl in it too.
+Otherwise those binds would land on the exact same keys as the normal ones and quitting
+Hyprland would end up on the same combo as closing a window.
+
 Everything else (colors, gaps, blur amount, animation curves) is plain values in
 `hypr/hyprland.lua`, easy to find and change.
 
